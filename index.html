@@ -2,1387 +2,802 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Cuestionario Inicial de Salud · GMM | Christian GarBa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <title>Cuestionario previo · Seguro de Gastos Médicos Mayores · Christian GarBa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --brand: #0b5ed7;
-      --brand-dark: #0842a0;
-      --bg: #f3f4f6;
-      --panel: #ffffff;
-      --border: #d1d5db;
-      --text: #111827;
-      --muted: #6b7280;
-      --danger: #b91c1c;
-      --success: #047857;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
-      --radius-lg: 18px;
-      --radius-full: 999px;
+    :root{
+      --brand:#0B5ED7;
+      --brand-dark:#0846a8;
+      --ink:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --bg:#f3f4f6;
+      --card:#ffffff;
+      --error:#b91c1c;
     }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+    body{padding:16px;}
+    .container{max-width:960px;margin:0 auto;}
 
-    * {
-      box-sizing: border-box;
-    }
+    /* Header */
+    .header{background:var(--card);border-radius:16px;padding:14px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+    .header-logo img{height:60px;width:auto;display:block;}
+    .header-text{flex:1;}
+    .title{font-size:20px;font-weight:700;margin:0;}
+    .subtitle{font-size:13px;color:var(--muted);margin:2px 0 0;}
+    .header-meta{text-align:right;font-size:13px;color:#374151;min-width:180px;}
+    .header-meta div{white-space:nowrap;}
 
-    body {
-      margin: 0;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #e5f0ff 0, #eff2f7 40%, #e5e7eb 100%);
-      color: var(--text);
-    }
+    /* Info banner */
+    .info-banner{background:#111827;color:#e5e7eb;border-radius:14px;padding:14px 16px;margin-bottom:18px;border:1px solid #1f2937;}
+    .info-banner h2{margin:0 0 6px;font-size:16px;}
+    .info-banner p{margin:4px 0;font-size:13px;line-height:1.45;}
+    .info-banner-time strong{font-weight:600;}
+    .info-banner-note{color:#cbd5f5;}
 
-    .app {
-      max-width: 1120px;
-      margin: 32px auto 48px;
-      padding: 0 16px 64px;
-    }
+    /* Cards / sections */
+    .section-card{background:var(--card);border-radius:14px;padding:18px 18px 20px;border:1px solid var(--border);margin-bottom:16px;}
+    .section-title{margin:0 0 6px;font-size:18px;font-weight:700;}
+    .section-helper{margin:0 0 14px;font-size:13px;color:var(--muted);}
+    .section-subtitle{margin:18px 0 8px;font-size:15px;font-weight:600;}
 
-    .card {
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: var(--shadow-soft);
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 28px;
-      background: linear-gradient(
-        120deg,
-        #001f4f 0,
-        #0b5ed7 40%,
-        #1d4ed8 100%
-      );
-      color: #f9fafb;
-    }
-
-    header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .header-logo img {
-      height: 54px;
-      width: auto;
-      display: block;
-      border-radius: 14px;
-      background: #ffffff;
-      padding: 6px 10px;
-    }
-
-    .header-title {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .header-title-main {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-    }
-
-    .header-title-sub {
-      font-size: 13px;
-      opacity: 0.9;
-    }
-
-    .header-contact {
-      text-align: right;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .header-contact strong {
-      display: block;
-      font-weight: 600;
-    }
-
-    /* Intro band */
-    .intro {
-      padding: 18px 28px 16px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.45);
-      background: linear-gradient(
-        90deg,
-        rgba(59, 130, 246, 0.08),
-        rgba(59, 130, 246, 0)
-      );
-    }
-
-    .intro-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .intro-text {
-      font-size: 13px;
-      color: var(--muted);
-      max-width: 880px;
-    }
-
-    /* Steps */
-    .steps {
-      display: flex;
-      gap: 10px;
-      padding: 14px 24px 4px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
-      background: #f9fafb;
-    }
-
-    .step-pill {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: var(--radius-full);
-      font-size: 13px;
-      border: 1px solid transparent;
-      cursor: default;
-      color: #6b7280;
-      background: transparent;
-    }
-
-    .step-pill-index {
-      height: 22px;
-      width: 22px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      border: 1px solid #cbd5f5;
-      background: #ffffff;
-    }
-
-    .step-pill-label {
-      font-weight: 500;
-    }
-
-    .step-pill.active {
-      color: #0b1120;
-      background: #e0edff;
-      border-color: #93c5fd;
-    }
-
-    .step-pill.active .step-pill-index {
-      background: var(--brand);
-      border-color: var(--brand);
-      color: #ffffff;
-    }
-
-    .step-pill.done {
-      color: #065f46;
-      background: #dcfce7;
-      border-color: #4ade80;
-    }
-
-    /* Form body */
-    .body {
-      padding: 20px 24px 28px;
-    }
-
-    @media (min-width: 900px) {
-      .body {
-        padding: 24px 32px 32px;
-      }
-    }
-
-    form {
-      margin: 0;
-    }
-
-    .step-panel {
-      display: none;
-      animation: fadeIn 0.2s ease-out;
-    }
-
-    .step-panel.active {
-      display: block;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .section-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 18px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px 18px;
-    }
-
-    @media (min-width: 840px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      font-size: 13px;
-    }
-
-    .field label {
-      font-weight: 500;
-      color: #111827;
-    }
-
-    .required {
-      color: #dc2626;
-      margin-left: 2px;
-    }
+    .field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 16px;}
+    .field{display:flex;flex-direction:column;font-size:14px;}
+    .field-full{grid-column:1 / -1;}
+    label{font-size:13px;font-weight:500;margin-bottom:4px;color:#111827;}
+    .req{color:var(--error);font-weight:600;}
 
     input[type="text"],
     input[type="email"],
     input[type="tel"],
-    input[type="number"],
     input[type="date"],
+    input[type="number"],
     select,
-    textarea {
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      padding: 9px 11px;
-      font-size: 13px;
-      font-family: inherit;
-      outline: none;
-      background: #f9fafb;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s;
+    textarea{
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:9px 10px;
+      font-size:14px;
+      font-family:inherit;
+      background:#f9fafb;
+      color:var(--ink);
+      transition:border .15s, box-shadow .15s, background .15s;
     }
+    textarea{resize:vertical;min-height:80px;}
+    input:focus,select:focus,textarea:focus{
+      outline:none;
+      border-color:var(--brand);
+      box-shadow:0 0 0 2px rgba(11,94,215,0.18);
+      background:#ffffff;
+    }
+    input[readonly]{background:#f3f4f6;color:#6b7280;}
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--brand);
-      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
-      background: #ffffff;
-    }
+    .radio-row,.checkbox-row{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:2px;font-size:13px;}
+    .radio-row label,.checkbox-row label{display:inline-flex;align-items:center;gap:4px;font-weight:400;cursor:pointer;}
 
-    textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    .field-inline {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 13px;
-    }
-
-    .chips {
-      display: inline-flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .chip {
-      border-radius: 999px;
-      padding: 5px 10px;
-      border: 1px solid var(--border);
-      background: #f9fafb;
-      cursor: pointer;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chip input {
-      display: none;
-    }
-
-    .chip.active {
-      border-color: var(--brand);
-      background: #e0edff;
-      color: #0b1120;
-      font-weight: 500;
-    }
-
-    .hint {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .field-error input,
-    .field-error select,
-    .field-error textarea {
-      border-color: var(--danger);
-      background: #fef2f2;
-    }
-
-    .error-text {
-      font-size: 11px;
-      color: var(--danger);
-    }
-
-    .form-errors {
-      display: none;
-      margin-bottom: 14px;
-      padding: 9px 11px;
-      border-radius: 10px;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      font-size: 12px;
-      color: #7f1d1d;
-    }
-
-    .form-errors.active {
-      display: block;
-    }
+    .muted{font-size:12px;color:var(--muted);margin-top:3px;}
 
     /* Dependientes */
-    .dependientes-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
+    .dependientes-box{background:#f9fafb;border-radius:10px;border:1px solid #e5e7eb;padding:12px 12px 10px;margin-top:8px;}
+    .dependiente-card{border-radius:10px;border:1px solid #e5e7eb;padding:12px;margin-bottom:10px;background:#ffffff;}
+    .dependiente-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+    .dependiente-header h4{margin:0;font-size:14px;font-weight:600;}
+    .dependiente-remove{background:none;border:none;color:var(--error);font-size:12px;cursor:pointer;}
+    .add-dependiente-btn{margin-top:8px;font-size:13px;padding:8px 12px;border-radius:999px;border:1px solid var(--brand);background:#eff6ff;color:#1d4ed8;cursor:pointer;font-weight:500;}
+    .add-dependiente-btn:hover{background:#dbeafe;}
+
+    /* Errors */
+    .errors-box{display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px;color:#7f1d1d;}
+    .errors-box ul{margin:6px 0 0 18px;padding:0;}
+
+    /* Buttons */
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+    .btn-primary{background:var(--brand);border:1px solid var(--brand);color:#fff;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;}
+    .btn-primary:hover{background:var(--brand-dark);}
+    .btn-secondary{background:#fff;border:1px solid var(--border);color:#111827;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;}
+    .btn-secondary:hover{background:#f3f4f6;}
+
+    /* Footer note */
+    .footnote{font-size:11px;color:#6b7280;margin-top:8px;}
+
+    /* Small screens */
+    @media (max-width:640px){
+      body{padding:10px;}
+      .header{flex-direction:column;align-items:flex-start;}
+      .header-meta{text-align:left;}
     }
 
-    .dependientes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .dependiente-card {
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 12px 12px 10px;
-      background: #f9fafb;
-    }
-
-    .dependiente-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 6px;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      border-radius: 999px;
-      padding: 3px 8px;
-      font-size: 11px;
-      background: #e5f3ff;
-      color: #1d4ed8;
-    }
-
-    .btn-icon {
-      border: none;
-      background: transparent;
-      color: #9ca3af;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 999px;
-    }
-
-    .btn-icon:hover {
-      background: rgba(15, 23, 42, 0.05);
-      color: #4b5563;
-    }
-
-    .dependiente-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px 10px;
-    }
-
-    @media (min-width: 900px) {
-      .dependiente-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-
-    /* Summary */
-    .summary-block {
-      border-radius: 16px;
-      border: 1px solid #e5e7eb;
-      padding: 14px 14px 12px;
-      margin-bottom: 12px;
-      background: #f9fafb;
-    }
-
-    .summary-block-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      padding: 2px 0;
-      gap: 12px;
-    }
-
-    .summary-row-label {
-      color: #4b5563;
-      min-width: 120px;
-    }
-
-    .summary-row-value {
-      color: #111827;
-      text-align: right;
-      flex: 1;
-    }
-
-    .disclaimer {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 10px;
-      line-height: 1.5;
-    }
-
-    /* Footer nav */
-    .footer-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding-top: 18px;
-      margin-top: 8px;
-      border-top: 1px solid rgba(148, 163, 184, 0.35);
-    }
-
-    .btn {
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 9px 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .btn-secondary:hover {
-      background: #d1d5db;
-    }
-
-    .btn-primary {
-      background: var(--brand);
-      color: #ffffff;
-      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
-    }
-
-    .btn-primary:hover {
-      background: var(--brand-dark);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.65;
-      cursor: default;
-      box-shadow: none;
-    }
-
-    .step-hint {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* Floating WhatsApp helper */
-    .floating-whatsapp {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 20;
-    }
-
-    .floating-whatsapp a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 13px;
-      background: #22c55e;
-      color: #ffffff;
-      text-decoration: none;
-      box-shadow: 0 16px 35px rgba(22, 163, 74, 0.55);
-    }
-
-    .floating-whatsapp a:hover {
-      background: #16a34a;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Print */
+    @media print{
+      body{background:#ffffff;padding:0;}
+      .header,.section-card,.info-banner{box-shadow:none;border-color:#d1d5db;}
+      .actions{display:none!important;}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <div class="card">
-      <header>
-        <div class="header-left">
-          <div class="header-logo">
-            <img src="logo-garba.png" alt="Christian GarBa · Seguros con Estrategia" />
-          </div>
-          <div class="header-title">
-            <div class="header-title-main">
-              Cuestionario Inicial de Salud · GMM
-            </div>
-            <div class="header-title-sub">
-              Información clave para cotizar tu Seguro de Gastos Médicos Mayores
-            </div>
-          </div>
-        </div>
-        <div class="header-contact">
-          <strong>Christian GarBa</strong>
-          <span>Seguros con Estrategia</span><br />
-          <span>📞 662 417 6032</span><br />
-          <span>✉️ christian.garcia@sfgarba.com.mx</span>
-        </div>
-      </header>
+<div class="container">
 
-      <div class="intro">
-        <div class="intro-title">
-          Antes de cotizar, necesito entender un poco de tu salud y la de tu familia.
-        </div>
-        <div class="intro-text">
-          La información que compartas se usa únicamente para evaluar opciones de seguro y, en su momento,
-          para la contratación (si así lo decides). Entre más clara y completa sea, más sólido será el respaldo
-          de tu póliza cuando la necesites.
-        </div>
-      </div>
-
-      <div class="steps">
-        <div class="step-pill active" data-step-pill="1">
-          <div class="step-pill-index">1</div>
-          <div class="step-pill-label">Titular</div>
-        </div>
-        <div class="step-pill" data-step-pill="2">
-          <div class="step-pill-index">2</div>
-          <div class="step-pill-label">Familia</div>
-        </div>
-        <div class="step-pill" data-step-pill="3">
-          <div class="step-pill-index">3</div>
-          <div class="step-pill-label">Salud y antecedentes</div>
-        </div>
-        <div class="step-pill" data-step-pill="4">
-          <div class="step-pill-index">4</div>
-          <div class="step-pill-label">Confirmación y envío</div>
-        </div>
-      </div>
-
-      <div class="body">
-        <form id="gmmForm" novalidate>
-          <div id="formErrors" class="form-errors">
-            Revisa los campos marcados en rojo antes de continuar.
-          </div>
-
-          <!-- PASO 1: TITULAR -->
-          <section class="step-panel active" data-step="1">
-            <h2 class="section-title">1. Datos del titular</h2>
-            <p class="section-subtitle">
-              El titular debe ser mayor de 18 años. Si el seguro es solo para tus hijos, tú sigues siendo la
-              persona titular.
-            </p>
-
-            <div class="grid-2">
-              <div class="field">
-                <label>Nombre(s) <span class="required">*</span></label>
-                <input
-                  type="text"
-                  id="titular_nombre"
-                  name="titular_nombre"
-                  required
-                  placeholder="Ej. Christian Iván"
-                />
-              </div>
-
-              <div class="field">
-                <label>Apellidos <span class="required">*</span></label>
-                <input
-                  type="text"
-                  id="titular_apellidos"
-                  name="titular_apellidos"
-                  required
-                  placeholder="Apellidos completos"
-                />
-              </div>
-
-              <div class="field">
-                <label>RFC (persona física) <span class="required">*</span></label>
-                <input
-                  type="text"
-                  id="titular_rfc"
-                  name="titular_rfc"
-                  required
-                  placeholder="Ej. GABC800619XXX"
-                />
-                <div class="hint">
-                  Si lo capturas con formato correcto, intentaré sugerir la fecha de nacimiento.
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Fecha de nacimiento <span class="required">*</span></label>
-                <input
-                  type="date"
-                  id="titular_nacimiento"
-                  name="titular_nacimiento"
-                  required
-                />
-                <div class="hint">El titular debe tener al menos 18 años.</div>
-              </div>
-
-              <div class="field">
-                <label>Edad (se calcula automáticamente)</label>
-                <input
-                  type="number"
-                  id="titular_edad"
-                  name="titular_edad"
-                  readonly
-                  placeholder="Se calculará con tu fecha de nacimiento"
-                />
-              </div>
-
-              <div class="field">
-                <label>Sexo biológico <span class="required">*</span></label>
-                <div class="chips" id="sexo_chips">
-                  <label class="chip">
-                    <input type="radio" name="titular_sexo" value="Hombre" required />
-                    <span>Hombre</span>
-                  </label>
-                  <label class="chip">
-                    <input type="radio" name="titular_sexo" value="Mujer" required />
-                    <span>Mujer</span>
-                  </label>
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Estatura (cm)</label>
-                <input
-                  type="number"
-                  id="titular_estatura"
-                  name="titular_estatura"
-                  placeholder="Ej. 172"
-                />
-              </div>
-
-              <div class="field">
-                <label>Peso (kg)</label>
-                <input
-                  type="number"
-                  id="titular_peso"
-                  name="titular_peso"
-                  placeholder="Ej. 80"
-                />
-              </div>
-
-              <div class="field">
-                <label>Correo electrónico <span class="required">*</span></label>
-                <input
-                  type="email"
-                  id="titular_email"
-                  name="titular_email"
-                  required
-                  placeholder="Ej. tu@correo.com"
-                />
-              </div>
-
-              <div class="field">
-                <label>Ciudad y estado <span class="required">*</span></label>
-                <input
-                  type="text"
-                  id="titular_ciudad"
-                  name="titular_ciudad"
-                  required
-                  placeholder="Ej. Hermosillo, Sonora"
-                />
-              </div>
-
-              <div class="field">
-                <label>Ocupación / actividad principal <span class="required">*</span></label>
-                <input
-                  type="text"
-                  id="titular_ocupacion"
-                  name="titular_ocupacion"
-                  required
-                  placeholder="Ej. independiente, empleado, empresario, etc."
-                />
-              </div>
-
-              <!-- NUEVO BLOQUE: SITUACIÓN ACTUAL DE SEGURO -->
-              <div class="field">
-                <label>Situación actual de seguro de GMM <span class="required">*</span></label>
-                <select id="situacion_gmm" name="situacion_gmm" required>
-                  <option value="">Selecciona una opción…</option>
-                  <option value="Tengo seguro de GMM y quiero mejorarlo o cambiarlo">
-                    Tengo seguro de GMM y quiero mejorarlo / cambiarlo
-                  </option>
-                  <option value="Tuve seguro de GMM pero actualmente no lo tengo">
-                    Tuve seguro de GMM pero actualmente no lo tengo
-                  </option>
-                  <option value="Nunca he tenido un seguro de GMM">
-                    Nunca he tenido un seguro de GMM
-                  </option>
-                </select>
-                <div class="hint">
-                  Esto me ayuda a enfocarme mejor en tu análisis y propuesta.
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Detalles de tu seguro actual (opcional)</label>
-                <textarea
-                  id="seguro_actual_detalles"
-                  name="seguro_actual_detalles"
-                  rows="3"
-                  placeholder="Aseguradora, plan, deducible, coaseguro, hospital principal, si subió la prima, etc."
-                ></textarea>
-              </div>
-
-              <div class="field">
-                <label>Teléfono móvil / WhatsApp <span class="required">*</span></label>
-                <input
-                  type="tel"
-                  id="titular_movil"
-                  name="titular_movil"
-                  required
-                  placeholder="10 dígitos"
-                />
-              </div>
-            </div>
-          </section>
-
-          <!-- PASO 2: FAMILIA -->
-          <section class="step-panel" data-step="2">
-            <h2 class="section-title">2. Familia y asegurados adicionales</h2>
-            <p class="section-subtitle">
-              Si quieres incluir a tu pareja e hijos, agrégalos aquí. Solo usaré esta información para
-              cotizar correctamente su protección.
-            </p>
-
-            <div class="dependientes-header">
-              <div class="step-hint">
-                Puedes agregar hasta 5 personas adicionales (pareja e hijos).
-              </div>
-              <button type="button" class="btn btn-secondary" id="btnAddDependiente">
-                + Agregar integrante
-              </button>
-            </div>
-
-            <div id="dependientesList" class="dependientes-list"></div>
-
-            <div class="hint">
-              Si por ahora solo quieres cotizar para ti, puedes dejar este paso en blanco.
-            </div>
-          </section>
-
-          <!-- PASO 3: SALUD -->
-          <section class="step-panel" data-step="3">
-            <h2 class="section-title">3. Salud y antecedentes</h2>
-            <p class="section-subtitle">
-              Esta sección es muy importante. No se trata de “estar perfecto”, sino de que la aseguradora tenga
-              claridad desde el inicio. Eso evita problemas al momento de un siniestro.
-            </p>
-
-            <div class="grid-2">
-              <div class="field">
-                <label>
-                  ¿Tienes alguna enfermedad crónica o diagnóstico importante?
-                  <span class="required">*</span>
-                </label>
-                <textarea
-                  id="titular_padecimientos"
-                  name="titular_padecimientos"
-                  required
-                  placeholder="Ej. hipertensión, diabetes, asma, colesterol alto, problemas de tiroides, etc. Si no, escribe 'Ninguno'."
-                ></textarea>
-              </div>
-
-              <div class="field">
-                <label>¿Tomas medicamentos de forma permanente? <span class="required">*</span></label>
-                <textarea
-                  id="titular_medicamentos"
-                  name="titular_medicamentos"
-                  required
-                  placeholder="Nombre del medicamento, dosis y desde cuándo. Si no, escribe 'Ninguno'."
-                ></textarea>
-              </div>
-
-              <div class="field">
-                <label>Cirugías u hospitalizaciones previas <span class="required">*</span></label>
-                <textarea
-                  id="titular_cirugias"
-                  name="titular_cirugias"
-                  required
-                  placeholder="Tipo de cirugía, año y si quedó alguna secuela. Si no, escribe 'Ninguna'."
-                ></textarea>
-              </div>
-
-              <div class="field">
-                <label>
-                  ¿Fumas actualmente o fumaste de forma regular?
-                  <span class="required">*</span>
-                </label>
-                <textarea
-                  id="titular_tabaco"
-                  name="titular_tabaco"
-                  required
-                  placeholder="Ej. 'No fumo', o 'Fumé 10 años, dejé en 2018', o 'Fumo 5 cigarrillos al día desde 2015'."
-                ></textarea>
-              </div>
-
-              <div class="field">
-                <label>Otros antecedentes relevantes</label>
-                <textarea
-                  id="titular_otros"
-                  name="titular_otros"
-                  placeholder="Ej. tratamientos en curso, estudios pendientes, recomendaciones médicas recientes, etc."
-                ></textarea>
-              </div>
-            </div>
-          </section>
-
-          <!-- PASO 4: CONFIRMACIÓN -->
-          <section class="step-panel" data-step="4">
-            <h2 class="section-title">4. Confirmación y envío</h2>
-            <p class="section-subtitle">
-              Revisa un resumen de la información capturada. Si todo está correcto, envíame tu cuestionario por
-              WhatsApp para continuar con tu análisis y propuesta.
-            </p>
-
-            <div id="summaryTitular" class="summary-block">
-              <div class="summary-block-title">Titular</div>
-              <div class="summary-body"></div>
-            </div>
-
-            <div id="summarySituacion" class="summary-block">
-              <div class="summary-block-title">Situación actual de seguro GMM</div>
-              <div class="summary-body"></div>
-            </div>
-
-            <div id="summaryFamilia" class="summary-block">
-              <div class="summary-block-title">Integrantes adicionales</div>
-              <div class="summary-body"></div>
-            </div>
-
-            <div id="summarySalud" class="summary-block">
-              <div class="summary-block-title">Salud y antecedentes</div>
-              <div class="summary-body"></div>
-            </div>
-
-            <div class="field" style="margin-top: 10px;">
-              <label>
-                <input
-                  type="checkbox"
-                  id="confirm_veracidad"
-                  required
-                  style="margin-right: 6px;"
-                />
-                Confirmo que la información proporcionada es verdadera y está basada en mi mejor conocimiento.
-              </label>
-              <div class="hint">
-                No se trata de “perfección médica”, sino de transparencia. Mientras más clara sea la información,
-                mejor respaldo tendrás cuando necesites usar tu seguro.
-              </div>
-            </div>
-
-            <p class="disclaimer">
-              La información contenida en este cuestionario es confidencial y será utilizada únicamente para fines
-              de asesoría y cotización de seguro de Gastos Médicos Mayores.
-            </p>
-          </section>
-
-          <!-- Navegación -->
-          <div class="footer-nav">
-            <button type="button" class="btn btn-secondary" id="btnPrev">
-              ⬅ Anterior
-            </button>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <div class="step-hint" id="stepHint">
-                Paso 1 de 4
-              </div>
-              <button type="button" class="btn btn-primary" id="btnNext">
-                Siguiente ➜
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                id="btnEnviar"
-                style="display: none;"
-              >
-                Enviar a mi asesor por WhatsApp
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+  <!-- Encabezado -->
+  <header class="header">
+    <div class="header-logo">
+      <!-- Asegúrate de tener este archivo en el repo -->
+      <img src="./logo-garba.png" alt="Christian GarBa · Seguros con Estrategia">
     </div>
+    <div class="header-text">
+      <h1 class="title">Cuestionario previo · Seguro de Gastos Médicos Mayores</h1>
+      <p class="subtitle">La información que compartas nos ayudará a recomendarte el plan adecuado para ti y tu familia.</p>
+    </div>
+    <div class="header-meta">
+      <div>📞 662 417 6032</div>
+      <div>✉️ christian.garcia@sfgarba.com.mx</div>
+    </div>
+  </header>
+
+  <!-- Banner informativo -->
+  <section class="info-banner">
+    <h2>Antes de empezar</h2>
+    <p>
+      Este formulario es un cuestionario previo para conocer tu situación y avanzar más rápido en la propuesta de seguro.
+      No estás contratando nada todavía, solo nos ayudas a entender tu perfil.
+    </p>
+    <p class="info-banner-time">
+      ⏱ <strong>Tiempo estimado de llenado:</strong><br>
+      • Solo titular: <strong>5–7 minutos</strong><br>
+      • Titular + familia: <strong>10–12 minutos</strong>
+    </p>
+    <p class="info-banner-note">
+      Si no tienes algún dato exacto a la mano, puedes indicarlo de forma aproximada y lo afinamos juntos.
+      Lo importante es responder con honestidad para evitar problemas al momento de un siniestro.
+    </p>
+  </section>
+
+  <!-- Caja de errores generales -->
+  <div id="formErrors" class="errors-box">
+    <strong>Revisa lo siguiente antes de enviar:</strong>
+    <ul id="errorsList"></ul>
   </div>
 
-  <!-- Botón flotante de ayuda -->
-  <div class="floating-whatsapp">
-    <a href="https://wa.me/526624176032" target="_blank" rel="noopener noreferrer">
-      💬 Escribir a Christian
-    </a>
-  </div>
+  <!-- FORMULARIO PRINCIPAL -->
+  <form id="gmmForm" novalidate>
+    <!-- 1. Datos del titular -->
+    <section class="section-card">
+      <h2 class="section-title">1. Datos del titular</h2>
+      <p class="section-helper">
+        El titular es la persona a nombre de quien estará la póliza. En seguros de gastos médicos no puede ser menor de 18 años.
+      </p>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("gmmForm");
-      const steps = Array.from(document.querySelectorAll(".step-panel"));
-      const pills = Array.from(document.querySelectorAll(".step-pill"));
-      const btnPrev = document.getElementById("btnPrev");
-      const btnNext = document.getElementById("btnNext");
-      const btnEnviar = document.getElementById("btnEnviar");
-      const stepHint = document.getElementById("stepHint");
-      const formErrors = document.getElementById("formErrors");
+      <div class="field-grid">
+        <div class="field field-full">
+          <label for="titular_nombre">Nombre completo del titular <span class="req">*</span></label>
+          <input type="text" id="titular_nombre" name="titular_nombre" placeholder="Nombre(s) y apellidos" required>
+        </div>
 
-      let currentStep = 1;
+        <div class="field">
+          <label for="titular_rfc">RFC del titular <span class="req">*</span></label>
+          <input type="text" id="titular_rfc" name="titular_rfc" placeholder="Ej. GABC800619HXX" maxlength="13" required>
+          <div class="muted">Lo usamos solo para identificarte y estimar tu fecha de nacimiento.</div>
+        </div>
 
-      function showStep(step) {
-        currentStep = step;
-        steps.forEach((panel) => {
-          panel.classList.toggle(
-            "active",
-            Number(panel.dataset.step) === step
-          );
-        });
+        <div class="field">
+          <label for="titular_fecha_nac">Fecha de nacimiento <span class="req">*</span></label>
+          <input type="date" id="titular_fecha_nac" name="titular_fecha_nac" required>
+        </div>
 
-        pills.forEach((pill, idx) => {
-          const num = idx + 1;
-          pill.classList.toggle("active", num === step);
-          pill.classList.toggle("done", num < step);
-        });
+        <div class="field">
+          <label for="titular_edad">Edad (años)</label>
+          <input type="number" id="titular_edad" name="titular_edad" readonly>
+          <div class="muted">Se calcula automáticamente a partir de tu fecha de nacimiento.</div>
+        </div>
 
-        btnPrev.style.visibility = step === 1 ? "hidden" : "visible";
-
-        if (step === steps.length) {
-          btnNext.style.display = "none";
-          btnEnviar.style.display = "inline-flex";
-          buildSummary();
-        } else {
-          btnNext.style.display = "inline-flex";
-          btnEnviar.style.display = "none";
-        }
-
-        stepHint.textContent = `Paso ${step} de ${steps.length}`;
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      function validateStep(step) {
-        formErrors.classList.remove("active");
-        const stepPanel = steps.find((p) => Number(p.dataset.step) === step);
-        if (!stepPanel) return true;
-
-        const requiredFields = stepPanel.querySelectorAll("[required]");
-        let valid = true;
-
-        requiredFields.forEach((field) => {
-          const wrapper = field.closest(".field") || field.parentElement;
-          wrapper.classList.remove("field-error");
-
-          let valueOk = true;
-
-          if (field.type === "checkbox" || field.type === "radio") {
-            const group =
-              field.name &&
-              stepPanel.querySelectorAll(
-                `input[name="${CSS.escape(field.name)}"]`
-              );
-            if (group && group.length > 1 && field.type === "radio") {
-              valueOk = Array.from(group).some((r) => r.checked);
-            } else {
-              valueOk = field.checked;
-            }
-          } else {
-            valueOk = field.value.trim() !== "";
-          }
-
-          if (!valueOk) {
-            valid = false;
-            wrapper.classList.add("field-error");
-          }
-        });
-
-        if (!valid) {
-          formErrors.classList.add("active");
-        }
-
-        return valid;
-      }
-
-      btnPrev.addEventListener("click", () => {
-        if (currentStep > 1) showStep(currentStep - 1);
-      });
-
-      btnNext.addEventListener("click", () => {
-        if (!validateStep(currentStep)) return;
-        if (currentStep < steps.length) showStep(currentStep + 1);
-      });
-
-      btnEnviar.addEventListener("click", () => {
-        if (!validateStep(currentStep)) return;
-        sendWhatsApp();
-      });
-
-      // Chips sexo
-      document
-        .getElementById("sexo_chips")
-        .addEventListener("click", (e) => {
-          const chip = e.target.closest(".chip");
-          if (!chip) return;
-          const input = chip.querySelector("input");
-          if (!input) return;
-          input.checked = true;
-          document
-            .querySelectorAll('#sexo_chips .chip')
-            .forEach((c) => c.classList.remove("active"));
-          chip.classList.add("active");
-        });
-
-      // Cálculo de edad con fecha de nacimiento
-      const fechaNacimiento = document.getElementById("titular_nacimiento");
-      const edadInput = document.getElementById("titular_edad");
-
-      function calcularEdad(value) {
-        const date = new Date(value);
-        if (isNaN(date)) return "";
-        const hoy = new Date();
-        let edad = hoy.getFullYear() - date.getFullYear();
-        const m = hoy.getMonth() - date.getMonth();
-        if (m < 0 || (m === 0 && hoy.getDate() < date.getDate())) {
-          edad--;
-        }
-        return edad;
-      }
-
-      fechaNacimiento.addEventListener("change", () => {
-        const edad = calcularEdad(fechaNacimiento.value);
-        edadInput.value = edad || "";
-      });
-
-      // DEPENDIENTES
-      const dependientesList = document.getElementById("dependientesList");
-      const btnAddDependiente = document.getElementById("btnAddDependiente");
-      let dependienteIndex = 0;
-      const MAX_DEP = 5;
-
-      function createDependienteCard(index) {
-        const card = document.createElement("div");
-        card.className = "dependiente-card";
-        card.dataset.index = index;
-
-        card.innerHTML = `
-          <div class="dependiente-card-header">
-            <span>Integrante ${index + 1}</span>
-            <button type="button" class="btn-icon" data-remove="${index}" title="Eliminar integrante">
-              ✕
-            </button>
+        <div class="field">
+          <label>Sexo <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="titular_sexo" value="Hombre" required> Hombre</label>
+            <label><input type="radio" name="titular_sexo" value="Mujer"> Mujer</label>
           </div>
-          <div class="dependiente-grid">
+        </div>
+
+        <div class="field">
+          <label for="titular_estado_civil">Estado civil</label>
+          <select id="titular_estado_civil" name="titular_estado_civil">
+            <option value="">Selecciona una opción</option>
+            <option value="Soltero(a)">Soltero(a)</option>
+            <option value="Casado(a)">Casado(a)</option>
+            <option value="Unión libre">Unión libre</option>
+            <option value="Divorciado(a)">Divorciado(a)</option>
+            <option value="Viudo(a)">Viudo(a)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="titular_telefono">Teléfono móvil <span class="req">*</span></label>
+          <input type="tel" id="titular_telefono" name="titular_telefono" placeholder="10 dígitos" required>
+        </div>
+
+        <div class="field">
+          <label for="titular_email">Correo electrónico <span class="req">*</span></label>
+          <input type="email" id="titular_email" name="titular_email" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+
+        <div class="field">
+          <label for="titular_ciudad">Ciudad y estado <span class="req">*</span></label>
+          <input type="text" id="titular_ciudad" name="titular_ciudad" placeholder="Ej. Hermosillo, Sonora" required>
+        </div>
+
+        <div class="field">
+          <label for="titular_cp">Código postal</label>
+          <input type="text" id="titular_cp" name="titular_cp" placeholder="Ej. 83240" maxlength="5">
+        </div>
+
+        <div class="field field-full">
+          <label for="titular_ocupacion">Ocupación / actividad principal</label>
+          <input type="text" id="titular_ocupacion" name="titular_ocupacion" placeholder="Ej. Empresario, empleado, profesionista independiente, etc.">
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Tipo de cobertura y situación actual -->
+    <section class="section-card">
+      <h2 class="section-title">2. Cobertura solicitada y situación actual</h2>
+      <p class="section-helper">
+        Esta sección nos ayuda a entender si es tu primer seguro o si estás buscando optimizar una póliza que ya tienes.
+      </p>
+
+      <div class="field-grid">
+        <div class="field field-full">
+          <label>¿Para quién será el seguro? <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="tipo_contratacion" value="Solo titular" required> Solo para mí</label>
+            <label><input type="radio" name="tipo_contratacion" value="Titular y familia"> Para mí y mi familia</label>
+          </div>
+        </div>
+
+        <div class="field field-full">
+          <label>Respecto a seguros de gastos médicos mayores, hoy tu situación es: <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="situacion_seguro" value="Nunca he tenido seguro de gastos médicos" required> Nunca he tenido seguro de gastos médicos</label>
+            <label><input type="radio" name="situacion_seguro" value="Tengo seguro actualmente (cambio de aseguradora)"> Tengo seguro actualmente (cambio de aseguradora)</label>
+            <label><input type="radio" name="situacion_seguro" value="Tuve seguro antes pero hoy no estoy asegurado"> Tuve seguro antes pero hoy no estoy asegurado</label>
+          </div>
+        </div>
+
+        <!-- Datos de póliza actual / anterior -->
+        <div class="field-grid field-full" id="bloquePolizaActual" style="display:none;margin-top:8px;">
+          <div class="field">
+            <label for="aseguradora_actual">Compañía actual/anterior</label>
+            <input type="text" id="aseguradora_actual" name="aseguradora_actual" placeholder="Ej. Allianz, AXA, etc.">
+          </div>
+          <div class="field">
+            <label for="plan_actual">Nombre del plan</label>
+            <input type="text" id="plan_actual" name="plan_actual" placeholder="Ej. Clásico, Premium, etc.">
+          </div>
+          <div class="field">
+            <label for="deducible_actual">Deducible aproximado</label>
+            <input type="text" id="deducible_actual" name="deducible_actual" placeholder="Ej. $20,000">
+          </div>
+          <div class="field">
+            <label for="coaseguro_actual">Coaseguro aproximado</label>
+            <input type="text" id="coaseguro_actual" name="coaseguro_actual" placeholder="Ej. 10%, 20%">
+          </div>
+          <div class="field">
+            <label for="antiguedad_poliza">Antigüedad aproximada de la póliza</label>
+            <input type="text" id="antiguedad_poliza" name="antiguedad_poliza" placeholder="Ej. 3 años, desde 2019, etc.">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="nivel_hospitalario">Tipo de red hospitalaria que te interesaría</label>
+          <select id="nivel_hospitalario" name="nivel_hospitalario">
+            <option value="">Selecciona una opción</option>
+            <option value="Red básica / regional">Red básica / regional</option>
+            <option value="Red intermedia">Red intermedia</option>
+            <option value="Red alta / hospitales de referencia">Red alta / hospitales de referencia</option>
+            <option value="Aún no estoy seguro, quiero comparar">Aún no estoy seguro, quiero comparar</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="zona_hospitalaria">Ciudad / zona donde te atenderías principalmente</label>
+          <input type="text" id="zona_hospitalaria" name="zona_hospitalaria" placeholder="Ej. Hermosillo, CDMX, Guadalajara, etc.">
+        </div>
+
+        <div class="field">
+          <label for="deducible_preferido">Deducible que estarías dispuesto a manejar</label>
+          <select id="deducible_preferido" name="deducible_preferido">
+            <option value="">No estoy seguro, quiero opciones</option>
+            <option value="Deducible bajo">Deducible bajo</option>
+            <option value="Deducible medio">Deducible medio</option>
+            <option value="Deducible alto">Deducible alto</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="coaseguro_preferido">Coaseguro que te resulta cómodo</label>
+          <select id="coaseguro_preferido" name="coaseguro_preferido">
+            <option value="">No estoy seguro, quiero opciones</option>
+            <option value="Coaseguro bajo (ej. 5–10%)">Coaseguro bajo (ej. 5–10%)</option>
+            <option value="Coaseguro medio (ej. 10–20%)">Coaseguro medio (ej. 10–20%)</option>
+            <option value="Me adapto según la prima">Me adapto según la prima</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Dependientes (solo se muestra si elige "Titular y familia") -->
+      <div id="dependientesWrapper" style="display:none;margin-top:12px;">
+        <h3 class="section-subtitle">Integrantes de la familia a incluir</h3>
+        <p class="section-helper">
+          Solo llena esta parte si también deseas cotizar para tu cónyuge e hijos. Puedes agregar hasta 5 integrantes.
+        </p>
+        <div id="dependientesBox" class="dependientes-box"></div>
+        <button type="button" id="addDependienteBtn" class="add-dependiente-btn">
+          + Agregar integrante de la familia
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. Salud y antecedentes -->
+    <section class="section-card">
+      <h2 class="section-title">3. Salud y antecedentes</h2>
+      <p class="section-helper">
+        No se trata de estar “perfecto”, sino de que el seguro esté bien configurado. Responde con honestidad; 
+        esto ayuda a evitar exclusiones o problemas al momento de una reclamación.
+      </p>
+
+      <!-- A) Estado actual y medicamentos -->
+      <h3 class="section-subtitle">A) Estado actual y medicamentos</h3>
+      <div class="field-grid">
+        <!-- Medicamentos -->
+        <div class="field">
+          <label>¿Tomas actualmente algún medicamento? <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="toma_medicamentos" value="si" required> Sí</label>
+            <label><input type="radio" name="toma_medicamentos" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field field-full" data-conditional="toma_medicamentos:si" style="display:none;">
+          <label for="detalle_medicamentos">Si respondiste “Sí”, indica qué medicamento tomas y para qué diagnóstico.</label>
+          <textarea id="detalle_medicamentos" name="detalle_medicamentos" rows="3" placeholder="Ej. Levotiroxina 75 mcg desde 2015 por hipotiroidismo controlado."></textarea>
+        </div>
+
+        <!-- Cirugías -->
+        <div class="field">
+          <label>¿Has tenido alguna cirugía previa? <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="cirugias_previas" value="si" required> Sí</label>
+            <label><input type="radio" name="cirugias_previas" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field field-full" data-conditional="cirugias_previas:si" style="display:none;">
+          <label for="detalle_cirugias">Si respondiste “Sí”, indica tipo de cirugía, año y si quedaste con alguna secuela.</label>
+          <textarea id="detalle_cirugias" name="detalle_cirugias" rows="3" placeholder="Ej. Cirugía de menisco en 2018, actualmente sin dolor ni limitación."></textarea>
+        </div>
+
+        <!-- Hospitalizaciones -->
+        <div class="field">
+          <label>¿Has estado hospitalizado en los últimos 5 años? <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="hospitalizaciones" value="si" required> Sí</label>
+            <label><input type="radio" name="hospitalizaciones" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field field-full" data-conditional="hospitalizaciones:si" style="display:none;">
+          <label for="detalle_hospitalizaciones">Si respondiste “Sí”, indica el motivo, fecha aproximada y evolución.</label>
+          <textarea id="detalle_hospitalizaciones" name="detalle_hospitalizaciones" rows="3" placeholder="Ej. Neumonía en 2022, 3 días hospitalizado, actualmente sin secuelas."></textarea>
+        </div>
+      </div>
+
+      <!-- B) Hábitos relevantes -->
+      <h3 class="section-subtitle">B) Hábitos relevantes</h3>
+      <div class="field-grid">
+        <div class="field">
+          <label>¿Fumas actualmente? <span class="req">*</span></label>
+          <div class="radio-row">
+            <label><input type="radio" name="fuma_actualmente" value="si" required> Sí</label>
+            <label><input type="radio" name="fuma_actualmente" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field field-full" data-conditional="fuma_actualmente:si" style="display:none;">
+          <div class="field-grid">
             <div class="field">
-              <label>Nombre <span class="required">*</span></label>
-              <input type="text" name="dep_nombre_${index}" required placeholder="Nombre(s)" />
+              <label for="fuma_desde">¿Desde cuándo fumas? (año o edad aproximada)</label>
+              <input type="text" id="fuma_desde" name="fuma_desde" placeholder="Ej. Desde 2010 o desde los 20 años">
             </div>
             <div class="field">
-              <label>Parentesco <span class="required">*</span></label>
-              <select name="dep_parentesco_${index}" required>
-                <option value="">Selecciona...</option>
-                <option value="Cónyuge">Cónyuge</option>
-                <option value="Hijo(a)">Hijo(a)</option>
-                <option value="Padre/Madre">Padre / Madre</option>
-                <option value="Otro">Otro</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>Fecha de nacimiento <span class="required">*</span></label>
-              <input type="date" name="dep_nacimiento_${index}" required />
-            </div>
-            <div class="field">
-              <label>Sexo <span class="required">*</span></label>
-              <select name="dep_sexo_${index}" required>
-                <option value="">Selecciona...</option>
-                <option value="Hombre">Hombre</option>
-                <option value="Mujer">Mujer</option>
-              </select>
+              <label for="fuma_cigs">¿Cuántos cigarrillos al día? (aproximado)</label>
+              <input type="number" id="fuma_cigs" name="fuma_cigs" min="0" placeholder="Ej. 5, 10, 20">
             </div>
           </div>
-        `;
+        </div>
+      </div>
 
-        return card;
+      <!-- C) Condiciones preexistentes -->
+      <h3 class="section-subtitle">C) Condiciones médicas preexistentes</h3>
+      <div class="field field-full">
+        <label>¿Has tenido o tienes diagnóstico de alguno de los siguientes?</label>
+        <div class="checkbox-row">
+          <label><input type="checkbox" name="cond_preexistentes" value="Diabetes"> Diabetes</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Hipertensión"> Hipertensión</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Enfermedad tiroidea"> Enfermedad tiroidea</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Colesterol o triglicéridos altos"> Colesterol / triglicéridos altos</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Asma o problemas respiratorios"> Asma / problemas respiratorios</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Enfermedades cardíacas"> Enfermedades cardíacas</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Problemas gastrointestinales crónicos"> Problemas gastrointestinales crónicos</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Enfermedades renales o hepáticas"> Enfermedades renales / hepáticas</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Enfermedades autoinmunes"> Enfermedades autoinmunes</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Problemas de columna o articulaciones"> Problemas de columna / articulaciones</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Trastornos neurológicos"> Trastornos neurológicos</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Cáncer o tumores"> Cáncer o tumores</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Ansiedad o depresión"> Ansiedad / depresión</label>
+          <label><input type="checkbox" name="cond_preexistentes" value="Otros"> Otros (especificar en detalles)</label>
+        </div>
+        <div class="muted">
+          Si no tienes ninguna de las anteriores, puedes dejar todo sin marcar y lo aclaráremos en la caja de detalles.
+        </div>
+      </div>
+
+      <!-- D) Antecedentes adicionales -->
+      <h3 class="section-subtitle">D) Antecedentes adicionales</h3>
+      <div class="field-grid">
+        <div class="field">
+          <label>¿Te ha rechazado alguna aseguradora por temas de salud?</label>
+          <div class="radio-row">
+            <label><input type="radio" name="rechazo_aseguradora" value="si"> Sí</label>
+            <label><input type="radio" name="rechazo_aseguradora" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>¿Tienes alguna cirugía programada?</label>
+          <div class="radio-row">
+            <label><input type="radio" name="cirugia_programada" value="si"> Sí</label>
+            <label><input type="radio" name="cirugia_programada" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field field-full">
+          <label>¿Padeces alguna limitación o discapacidad permanente?</label>
+          <div class="radio-row">
+            <label><input type="radio" name="discapacidad" value="si"> Sí</label>
+            <label><input type="radio" name="discapacidad" value="no"> No</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- E) Caja de testimonio médico -->
+      <h3 class="section-subtitle">E) Detalles médicos adicionales</h3>
+      <div class="field field-full">
+        <label for="detalles_medicos">
+          Si deseas agregar alguna aclaración, antecedente, diagnóstico o contexto adicional para que tu seguro sea configurado correctamente, escríbelo aquí.
+        </label>
+        <textarea id="detalles_medicos" name="detalles_medicos" rows="4"
+          placeholder="Ej. 'Tuve ansiedad en pandemia pero ya no tomo medicamento', 'Resistencia a la insulina desde 2022, controlada con alimentación', etc."></textarea>
+        <div class="muted">
+          Si en alguna de las preguntas respondiste “Sí” o marcaste alguna condición, es recomendable que expliques aquí los detalles.
+        </div>
+      </div>
+    </section>
+
+    <!-- Acciones -->
+    <section class="section-card">
+      <h2 class="section-title">4. Enviar información a tu asesor</h2>
+      <p class="section-helper">
+        Antes de enviarlo a WhatsApp, revisaremos que estén cubiertos los datos más importantes. 
+        No se compartirá esta información con nadie más.
+      </p>
+
+      <div class="actions">
+        <button type="button" id="sendWhatsApp" class="btn-primary">
+          Enviar a mi asesor por WhatsApp
+        </button>
+        <button type="reset" class="btn-secondary">
+          Limpiar formulario
+        </button>
+      </div>
+      <p class="footnote">
+        Al enviar este formulario confirmas que la información proporcionada es verdadera a tu leal saber y entender.
+        Esto no implica aún la contratación de ninguna póliza; es un paso previo de análisis.
+      </p>
+    </section>
+  </form>
+</div>
+
+<script>
+  // Utilidades
+  const $ = id => document.getElementById(id);
+
+  // 1) RFC -> Fecha de nacimiento + edad
+  const rfcInput = $('titular_rfc');
+  const fechaInput = $('titular_fecha_nac');
+  const edadInput = $('titular_edad');
+
+  function calcEdadFromDate(dateStr){
+    if(!dateStr) return '';
+    const today = new Date();
+    const dob = new Date(dateStr);
+    if(isNaN(dob.getTime())) return '';
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if(m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    return age;
+  }
+
+  rfcInput.addEventListener('blur', ()=>{
+    const rfc = rfcInput.value.trim();
+    if(rfc.length < 10) return; // no intentamos
+    const fechaPart = rfc.substring(4, 10); // YYMMDD
+    if(!/^\d{6}$/.test(fechaPart)) return;
+    const yy = parseInt(fechaPart.substring(0,2),10);
+    const mm = parseInt(fechaPart.substring(2,4),10);
+    const dd = parseInt(fechaPart.substring(4,6),10);
+    if(mm < 1 || mm > 12 || dd < 1 || dd > 31) return;
+
+    const currentYear = new Date().getFullYear() % 100;
+    const century = (yy <= currentYear ? 2000 : 1900);
+    const fullYear = century + yy;
+    const iso = `${fullYear.toString().padStart(4,'0')}-${mm.toString().padStart(2,'0')}-${dd.toString().padStart(2,'0')}`;
+
+    if(!fechaInput.value){
+      fechaInput.value = iso;
+      const edad = calcEdadFromDate(iso);
+      if(edad) edadInput.value = edad;
+    }
+  });
+
+  fechaInput.addEventListener('change', ()=>{
+    const edad = calcEdadFromDate(fechaInput.value);
+    if(edad) edadInput.value = edad;
+  });
+
+  // 2) Mostrar/ocultar bloque de póliza actual según situación
+  const radiosSituacion = document.querySelectorAll('input[name="situacion_seguro"]');
+  const bloquePolizaActual = $('bloquePolizaActual');
+  radiosSituacion.forEach(r =>{
+    r.addEventListener('change', ()=>{
+      if(r.value === 'Tengo seguro actualmente (cambio de aseguradora)' ||
+         r.value === 'Tuve seguro antes pero hoy no estoy asegurado'){
+        bloquePolizaActual.style.display = 'grid';
+      }else{
+        bloquePolizaActual.style.display = 'none';
       }
-
-      btnAddDependiente.addEventListener("click", () => {
-        const current = dependientesList.querySelectorAll(
-          ".dependiente-card"
-        ).length;
-        if (current >= MAX_DEP) {
-          alert("Por ahora solo permito agregar hasta 5 integrantes.");
-          return;
-        }
-        const card = createDependienteCard(dependienteIndex++);
-        dependientesList.appendChild(card);
-      });
-
-      dependientesList.addEventListener("click", (e) => {
-        const btn = e.target.closest("[data-remove]");
-        if (!btn) return;
-        const idx = btn.dataset.remove;
-        const card = dependientesList.querySelector(
-          `.dependiente-card[data-index="${idx}"]`
-        );
-        if (card) card.remove();
-      });
-
-      // RESUMEN
-      function addSummaryRow(container, label, value) {
-        if (!value) return;
-        const row = document.createElement("div");
-        row.className = "summary-row";
-        row.innerHTML = `
-          <div class="summary-row-label">${label}</div>
-          <div class="summary-row-value">${value}</div>
-        `;
-        container.appendChild(row);
-      }
-
-      function buildSummary() {
-        const data = new FormData(form);
-
-        // Titular
-        const titularBlock = document
-          .getElementById("summaryTitular")
-          .querySelector(".summary-body");
-        titularBlock.innerHTML = "";
-
-        addSummaryRow(
-          titularBlock,
-          "Nombre",
-          `${data.get("titular_nombre") || ""} ${
-            data.get("titular_apellidos") || ""
-          }`
-        );
-        addSummaryRow(titularBlock, "RFC", data.get("titular_rfc"));
-        addSummaryRow(titularBlock, "Fecha de nacimiento", data.get("titular_nacimiento"));
-        addSummaryRow(titularBlock, "Edad", data.get("titular_edad"));
-        addSummaryRow(titularBlock, "Sexo", data.get("titular_sexo"));
-        addSummaryRow(
-          titularBlock,
-          "Estatura / Peso",
-          `${data.get("titular_estatura") || "-"} cm · ${
-            data.get("titular_peso") || "-"
-          } kg`
-        );
-        addSummaryRow(titularBlock, "Ciudad", data.get("titular_ciudad"));
-        addSummaryRow(titularBlock, "Ocupación", data.get("titular_ocupacion"));
-        addSummaryRow(titularBlock, "Correo", data.get("titular_email"));
-        addSummaryRow(titularBlock, "Móvil", data.get("titular_movil"));
-
-        // Situación actual de seguro
-        const situacionBlock = document
-          .getElementById("summarySituacion")
-          .querySelector(".summary-body");
-        situacionBlock.innerHTML = "";
-        addSummaryRow(
-          situacionBlock,
-          "Estado actual",
-          data.get("situacion_gmm")
-        );
-        addSummaryRow(
-          situacionBlock,
-          "Detalles del seguro actual",
-          data.get("seguro_actual_detalles")
-        );
-
-        // Familia
-        const familiaBlock = document
-          .getElementById("summaryFamilia")
-          .querySelector(".summary-body");
-        familiaBlock.innerHTML = "";
-        const depCards =
-          dependientesList.querySelectorAll(".dependiente-card");
-        if (!depCards.length) {
-          familiaBlock.textContent = "Por ahora solo tú estás considerado en la cotización.";
-        } else {
-          depCards.forEach((card, i) => {
-            const idx = card.dataset.index;
-            const nombre = data.get(`dep_nombre_${idx}`) || "";
-            const parentesco = data.get(`dep_parentesco_${idx}`) || "";
-            const fecha = data.get(`dep_nacimiento_${idx}`) || "";
-            const sexo = data.get(`dep_sexo_${idx}`) || "";
-
-            const row = document.createElement("div");
-            row.className = "summary-row";
-            row.innerHTML = `
-              <div class="summary-row-label">Integrante ${i + 1}</div>
-              <div class="summary-row-value">
-                ${nombre} · ${parentesco || "-"}<br />
-                Nac.: ${fecha || "-"} · Sexo: ${sexo || "-"}
-              </div>
-            `;
-            familiaBlock.appendChild(row);
-          });
-        }
-
-        // Salud
-        const saludBlock = document
-          .getElementById("summarySalud")
-          .querySelector(".summary-body");
-        saludBlock.innerHTML = "";
-        addSummaryRow(
-          saludBlock,
-          "Enfermedades / diagnósticos",
-          data.get("titular_padecimientos")
-        );
-        addSummaryRow(
-          saludBlock,
-          "Medicamentos permanentes",
-          data.get("titular_medicamentos")
-        );
-        addSummaryRow(
-          saludBlock,
-          "Cirugías / hospitalizaciones",
-          data.get("titular_cirugias")
-        );
-        addSummaryRow(
-          saludBlock,
-          "Tabaco",
-          data.get("titular_tabaco")
-        );
-        addSummaryRow(
-          saludBlock,
-          "Otros antecedentes",
-          data.get("titular_otros")
-        );
-      }
-
-      // WhatsApp
-      function sendWhatsApp() {
-        const data = new FormData(form);
-
-        let msg = "";
-        msg += "🚑 *CUESTIONARIO INICIAL DE SALUD – GMM*%0A";
-        msg += "Generado desde el formulario de GarBaTools.%0A%0A";
-
-        msg += "👤 *TITULAR*%0A";
-        msg += `Nombre: ${data.get("titular_nombre") || ""} ${
-          data.get("titular_apellidos") || ""
-        }%0A`;
-        msg += `RFC: ${data.get("titular_rfc") || "-"}%0A`;
-        msg += `Fecha de nacimiento: ${
-          data.get("titular_nacimiento") || "-"
-        } (edad ${data.get("titular_edad") || "-"})%0A`;
-        msg += `Sexo: ${data.get("titular_sexo") || "-"}%0A`;
-        msg += `Estatura / Peso: ${data.get("titular_estatura") || "-"} cm · ${
-          data.get("titular_peso") || "-"
-        } kg%0A`;
-        msg += `Ciudad: ${data.get("titular_ciudad") || "-"}%0A`;
-        msg += `Ocupación: ${data.get("titular_ocupacion") || "-"}%0A`;
-        msg += `Correo: ${data.get("titular_email") || "-"}%0A`;
-        msg += `Móvil: ${data.get("titular_movil") || "-"}%0A%0A`;
-
-        msg += "🚦 *SITUACIÓN ACTUAL DE SEGURO GMM*%0A";
-        msg += `Estado: ${data.get("situacion_gmm") || "-"}%0A`;
-        if (data.get("seguro_actual_detalles")) {
-          msg += `Detalles: ${
-            data.get("seguro_actual_detalles")
-          }%0A`;
-        }
-        msg += "%0A";
-
-        msg += "👨‍👩‍👧‍👦 *INTEGRANTES ADICIONALES*%0A";
-        const depCards =
-          dependientesList.querySelectorAll(".dependiente-card");
-        if (!depCards.length) {
-          msg += "Solo se considera al titular por el momento.%0A%0A";
-        } else {
-          depCards.forEach((card, i) => {
-            const idx = card.dataset.index;
-            msg += `Integrante ${i + 1}: ${
-              data.get(`dep_nombre_${idx}`) || "-"
-            } (${data.get(`dep_parentesco_${idx}`) || "-"})%0A`;
-            msg += `Nacimiento: ${
-              data.get(`dep_nacimiento_${idx}`) || "-"
-            } · Sexo: ${data.get(`dep_sexo_${idx}`) || "-"}%0A%0A`;
-          });
-        }
-
-        msg += "🩺 *SALUD Y ANTECEDENTES DEL TITULAR*%0A";
-        msg += `Enfermedades / diagnósticos:%0A${
-          data.get("titular_padecimientos") || "-"
-        }%0A%0A`;
-        msg += `Medicamentos permanentes:%0A${
-          data.get("titular_medicamentos") || "-"
-        }%0A%0A`;
-        msg += `Cirugías / hospitalizaciones:%0A${
-          data.get("titular_cirugias") || "-"
-        }%0A%0A`;
-        msg += `Tabaco:%0A${data.get("titular_tabaco") || "-"}%0A%0A`;
-        if (data.get("titular_otros")) {
-          msg += `Otros antecedentes:%0A${
-            data.get("titular_otros")
-          }%0A%0A`;
-        }
-
-        msg += "—%0A";
-        msg += "Cuestionario enviado desde el formulario GMM de Christian GarBa.";
-
-        const phone = "526624176032"; // número al que te llegará el cuestionario
-        const url = `https://wa.me/${phone}?text=${msg}`;
-        window.open(url, "_blank");
-      }
-
-      // Inicial
-      showStep(1);
     });
-  </script>
+  });
+
+  // 3) Mostrar dependientes si selecciona "Titular y familia"
+  const radiosTipoContratacion = document.querySelectorAll('input[name="tipo_contratacion"]');
+  const dependientesWrapper = $('dependientesWrapper');
+  const dependientesBox = $('dependientesBox');
+  const addDepBtn = $('addDependienteBtn');
+  let depCount = 0;
+  const MAX_DEP = 5;
+
+  function createDependienteCard(index){
+    const card = document.createElement('div');
+    card.className = 'dependiente-card';
+    card.dataset.index = index;
+
+    card.innerHTML = `
+      <div class="dependiente-header">
+        <h4>Integrante ${index}</h4>
+        <button type="button" class="dependiente-remove">Eliminar</button>
+      </div>
+      <div class="field-grid">
+        <div class="field field-full">
+          <label for="dep_nombre_${index}">Nombre completo</label>
+          <input type="text" id="dep_nombre_${index}" name="dep_nombre_${index}" placeholder="Nombre(s) y apellidos">
+        </div>
+        <div class="field">
+          <label for="dep_relacion_${index}">Relación</label>
+          <select id="dep_relacion_${index}" name="dep_relacion_${index}">
+            <option value="">Selecciona</option>
+            <option value="Cónyuge">Cónyuge</option>
+            <option value="Hijo(a)">Hijo(a)</option>
+            <option value="Padre/Madre">Padre/Madre</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dep_fecha_nac_${index}">Fecha de nacimiento</label>
+          <input type="date" id="dep_fecha_nac_${index}" name="dep_fecha_nac_${index}">
+        </div>
+        <div class="field">
+          <label for="dep_edad_${index}">Edad</label>
+          <input type="number" id="dep_edad_${index}" name="dep_edad_${index}" readonly>
+        </div>
+        <div class="field">
+          <label>Sexo</label>
+          <div class="radio-row">
+            <label><input type="radio" name="dep_sexo_${index}" value="Hombre"> Hombre</label>
+            <label><input type="radio" name="dep_sexo_${index}" value="Mujer"> Mujer</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>¿Cuenta actualmente con seguro de gastos médicos?</label>
+          <div class="radio-row">
+            <label><input type="radio" name="dep_tiene_seguro_${index}" value="si"> Sí</label>
+            <label><input type="radio" name="dep_tiene_seguro_${index}" value="no"> No</label>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // edad automática para dependiente
+    const fechaDep = card.querySelector(`#dep_fecha_nac_${index}`);
+    const edadDep = card.querySelector(`#dep_edad_${index}`);
+    fechaDep.addEventListener('change', ()=>{
+      const age = calcEdadFromDate(fechaDep.value);
+      if(age) edadDep.value = age;
+    });
+
+    // eliminar
+    card.querySelector('.dependiente-remove').addEventListener('click', ()=>{
+      dependientesBox.removeChild(card);
+      depCount--;
+      // Reetiquetar encabezados
+      [...dependientesBox.children].forEach((c,idx)=>{
+        const h4 = c.querySelector('h4');
+        if(h4) h4.textContent = 'Integrante ' + (idx+1);
+      });
+    });
+
+    return card;
+  }
+
+  radiosTipoContratacion.forEach(r=>{
+    r.addEventListener('change', ()=>{
+      if(r.value === 'Titular y familia'){
+        dependientesWrapper.style.display = 'block';
+        if(depCount === 0) {
+          depCount = 1;
+          dependientesBox.appendChild(createDependienteCard(depCount));
+        }
+      }else{
+        dependientesWrapper.style.display = 'none';
+        dependientesBox.innerHTML = '';
+        depCount = 0;
+      }
+    });
+  });
+
+  addDepBtn.addEventListener('click', ()=>{
+    if(depCount >= MAX_DEP) return;
+    depCount++;
+    dependientesBox.appendChild(createDependienteCard(depCount));
+  });
+
+  // 4) Mostrar campos condicionales en sección médica
+  function handleConditionalRadios(){
+    const conditionalBlocks = document.querySelectorAll('[data-conditional]');
+    conditionalBlocks.forEach(block=>{
+      const rule = block.getAttribute('data-conditional'); // ej: "toma_medicamentos:si"
+      if(!rule) return;
+      const [name, val] = rule.split(':');
+      const radios = document.querySelectorAll(`input[name="${name}"]`);
+      const update = ()=>{
+        let show = false;
+        radios.forEach(r=>{
+          if(r.checked && r.value === val) show = true;
+        });
+        block.style.display = show ? 'block' : 'none';
+      };
+      radios.forEach(r=>r.addEventListener('change', update));
+      update(); // estado inicial
+    });
+  }
+  handleConditionalRadios();
+
+  // 5) Validación antes de enviar + mensaje WhatsApp
+  const errorsBox = $('formErrors');
+  const errorsList = $('errorsList');
+  const sendBtn = $('sendWhatsApp');
+
+  function getRadioValue(name){
+    const r = document.querySelector(`input[name="${name}"]:checked`);
+    return r ? r.value : '';
+  }
+  function getCheckboxValues(name){
+    return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el=>el.value);
+  }
+
+  function validateForm(){
+    const errors = [];
+
+    // Titular básico
+    if(!$('titular_nombre').value.trim()) errors.push('• Nombre completo del titular.');
+    if(!$('titular_rfc').value.trim()) errors.push('• RFC del titular.');
+    if(!$('titular_fecha_nac').value) errors.push('• Fecha de nacimiento del titular.');
+    if(!getRadioValue('titular_sexo')) errors.push('• Sexo del titular.');
+    if(!$('titular_telefono').value.trim()) errors.push('• Teléfono móvil del titular.');
+    if(!$('titular_email').value.trim()) errors.push('• Correo electrónico del titular.');
+    if(!$('titular_ciudad').value.trim()) errors.push('• Ciudad y estado del titular.');
+
+    // Cobertura
+    if(!getRadioValue('tipo_contratacion')) errors.push('• Seleccionar si el seguro es solo para ti o también para tu familia.');
+    if(!getRadioValue('situacion_seguro')) errors.push('• Indicar tu situación actual respecto a seguros de gastos médicos.');
+
+    // Salud básica
+    if(!getRadioValue('toma_medicamentos')) errors.push('• Indicar si actualmente tomas algún medicamento.');
+    if(!getRadioValue('cirugias_previas')) errors.push('• Indicar si has tenido cirugías previas.');
+    if(!getRadioValue('hospitalizaciones')) errors.push('• Indicar si has estado hospitalizado en los últimos 5 años.');
+    if(!getRadioValue('fuma_actualmente')) errors.push('• Indicar si fumas actualmente.');
+
+    // Si marcó condiciones, sugerimos usar el cuadro de detalles
+    const conds = getCheckboxValues('cond_preexistentes');
+    if(conds.length > 0 && !$('detalles_medicos').value.trim()){
+      errors.push('• Agregar una breve explicación en “Detalles médicos adicionales” sobre las condiciones marcadas.');
+    }
+
+    if(errors.length > 0){
+      errorsList.innerHTML = errors.map(e=>`<li>${e}</li>`).join('');
+      errorsBox.style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+      return false;
+    }else{
+      errorsBox.style.display = 'none';
+      errorsList.innerHTML = '';
+      return true;
+    }
+  }
+
+  function buildWhatsAppMessage(){
+    const nombreTitular = $('titular_nombre').value.trim();
+    const edadTitular = $('titular_edad').value || '';
+    const ciudad = $('titular_ciudad').value.trim();
+    const tel = $('titular_telefono').value.trim();
+    const correo = $('titular_email').value.trim();
+
+    const tipoContr = getRadioValue('tipo_contratacion');
+    const situacion = getRadioValue('situacion_seguro');
+    const nivelHosp = $('nivel_hospitalario').value || 'Sin especificar';
+    const zonaHosp = $('zona_hospitalaria').value || 'Sin especificar';
+
+    const tomaMed = getRadioValue('toma_medicamentos') || 'Sin responder';
+    const cirPrev = getRadioValue('cirugias_previas') || 'Sin responder';
+    const hosp = getRadioValue('hospitalizaciones') || 'Sin responder';
+    const fuma = getRadioValue('fuma_actualmente') || 'Sin responder';
+    const conds = getCheckboxValues('cond_preexistentes');
+    const condsTxt = conds.length>0 ? conds.join(', ') : 'Ninguna indicada';
+    const detallesMed = $('detalles_medicos').value.trim() || 'Sin comentarios adicionales.';
+
+    const msg = [
+      'Hola Christian, te envío mi cuestionario previo de Gastos Médicos Mayores.',
+      '',
+      'DATOS DEL TITULAR',
+      `• Nombre: ${nombreTitular}`,
+      edadTitular ? `• Edad: ${edadTitular} años` : '',
+      `• Ciudad: ${ciudad}`,
+      `• Teléfono: ${tel}`,
+      `• Correo: ${correo}`,
+      '',
+      'COBERTURA SOLICITADA',
+      `• Tipo de contratación: ${tipoContr || 'Sin especificar'}`,
+      `• Situación actual: ${situacion || 'Sin especificar'}`,
+      `• Red hospitalaria de interés: ${nivelHosp}`,
+      `• Zona de atención: ${zonaHosp}`,
+      '',
+      'SALUD Y ANTECEDENTES (resumen)',
+      `• Medicamentos actuales: ${tomaMed}`,
+      `• Cirugías previas: ${cirPrev}`,
+      `• Hospitalizaciones últimos 5 años: ${hosp}`,
+      `• ¿Fuma actualmente?: ${fuma}`,
+      `• Condiciones médicas indicadas: ${condsTxt}`,
+      '',
+      'DETALLES MÉDICOS ADICIONALES',
+      detallesMed,
+      '',
+      'En caso de que falte algún dato, lo podemos complementar en la llamada.'
+    ].filter(Boolean).join('\n');
+
+    return encodeURIComponent(msg);
+  }
+
+  sendBtn.addEventListener('click', ()=>{
+    if(!validateForm()) return;
+    const text = buildWhatsAppMessage();
+    const phone = '526624176032'; // número de Christian para seguros
+    const url = `https://wa.me/${phone}?text=${text}`;
+    window.open(url, '_blank');
+  });
+</script>
 </body>
 </html>

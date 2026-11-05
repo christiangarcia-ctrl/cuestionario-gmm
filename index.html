@@ -965,7 +965,7 @@
   // ── Build WhatsApp message (short)
   function buildWA(d){
     const lines = [
-      "Hola Christian, te envío mi cuestionario de GMM. También se generó el PDF en mi dispositivo.",
+      "Hola Christian, te comparto mis datos del cuestionario de GMM. El PDF se descargó en mi dispositivo y lo adjuntaré aquí en WhatsApp.",
       "",
       `• Nombre: ${d.nombre}`,
       `• Edad: ${d.edad ? d.edad+" años" : "—"}`,
@@ -994,8 +994,8 @@
   $("sendBtn").addEventListener("click", async () => {
     if(!validate()) return;
 
-    if(!window.jspdf || !window.emailjs){
-      showToast("⚠️ No cargaron los recursos necesarios (revisa tu conexión o un bloqueador de anuncios) y recarga la página.", "error");
+    if(!window.jspdf){
+      showToast("⚠️ No se pudo cargar el generador de PDF. Mantén abierta esta página e inténtalo de nuevo.", "error");
       return;
     }
 
@@ -1022,9 +1022,22 @@
       // 1) Generate PDF
       const doc = generatePDF(d);
 
-      overlayMsg.textContent = "Enviando correo…";
+      // 2) Download PDF primero: no depende del correo.
+      overlayMsg.textContent = "Descargando PDF…";
+      doc.save(`GMM_${d.nombre.replace(/\\s+/g,"_")}.pdf`);
 
-      // 2) Send email via EmailJS
+      // 3) Open WhatsApp. El PDF debe adjuntarse manualmente por el cliente.
+      const url = `https://wa.me/526623072573?text=${buildWA(d)}`;
+      if(waWindow && !waWindow.closed){ waWindow.location.href = url; }
+      else { window.open(url, "_blank"); }
+      overlay.classList.remove("show");
+      showToast("✅ PDF preparado. Adjunta el archivo descargado a tu mensaje de WhatsApp.", "success");
+
+      // El correo es una entrega secundaria; si falla, no bloquea PDF ni WhatsApp.
+      overlayMsg.textContent = "Enviando una copia por correo…";
+      let emailDelivered = false;
+      try {
+        if (!window.emailjs) throw new Error("EmailJS no está disponible");
       await emailjs.send("Servicio_ijc4qzo", "template_jcus0e8", {
         to_email: "christian.garcia@sfgarba.com.mx",
         subject: `Datos de cliente: ${d.nombre}`,
@@ -1064,21 +1077,18 @@ Discapacidad: ${d.discapacidad}
 DETALLES ADICIONALES
 ${d.detalles_medicos||"Sin comentarios."}`,
       });
+        emailDelivered = true;
+      } catch (emailError) {
+        console.error("Error al enviar copia del cuestionario por correo:", emailError);
+      }
 
-      overlayMsg.textContent = "Descargando PDF…";
-
-      // 3) Download PDF
-      doc.save(`GMM_${d.nombre.replace(/\s+/g,"_")}.pdf`);
-
-      overlay.classList.remove("show");
-      $("successScreen").classList.add("show");
-      $("successScreen").scrollIntoView({behavior:"smooth", block:"center"});
-
-      // 4) Open WhatsApp (reutiliza la pestaña ya abierta al inicio del clic)
-      const url = `https://wa.me/526623072573?text=${buildWA(d)}`;
-      if(waWindow && !waWindow.closed){ waWindow.location.href = url; }
-      else { window.open(url, "_blank"); }
-      showToast("✅ PDF descargado y WhatsApp abierto. ¡Listo!", "success");
+      if (emailDelivered) {
+        $("successScreen").querySelector("p").textContent = "Tu cuestionario se envió por correo correctamente. Adjunta también el PDF descargado a tu mensaje de WhatsApp.";
+        $("successScreen").classList.add("show");
+        $("successScreen").scrollIntoView({behavior:"smooth", block:"center"});
+      } else {
+        showToast("⚠️ No se envió la copia por correo. Adjunta el PDF descargado en WhatsApp para que tu asesor lo reciba.", "error");
+      }
 
     } catch(err){
       overlay.classList.remove("show");

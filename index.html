@@ -1024,7 +1024,7 @@
 
       // 2) Download PDF primero: no depende del correo.
       overlayMsg.textContent = "Descargando PDF…";
-      doc.save(`GMM_${d.nombre.replace(/\\s+/g,"_")}.pdf`);
+      doc.save(`GMM_${d.nombre.replace(/\s+/g,"_")}.pdf`);
 
       // 3) Open WhatsApp. El PDF debe adjuntarse manualmente por el cliente.
       const url = `https://wa.me/526623072573?text=${buildWA(d)}`;

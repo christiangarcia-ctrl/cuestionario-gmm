@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Cuestionario GMM · Christian GarBa</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
@@ -399,8 +398,8 @@
   <div class="success-screen" id="successScreen">
     <div class="success-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
     <h2>¡Listo, información recibida!</h2>
-    <p>Tu cuestionario fue enviado correctamente.</p>
-    <p>El PDF se descargó en tu dispositivo y WhatsApp se abrió con un resumen.</p>
+    <p>Se abrió WhatsApp con todos tus datos. Solo presiona enviar.</p>
+    <p>Si se descargó el PDF, puedes adjuntarlo también en el chat.</p>
     <div class="next-step">📋 <strong>Siguiente paso:</strong> Christian revisará tu perfil y te contactará en menos de 24 horas con tu cotización personalizada.</div>
   </div>
 
@@ -551,8 +550,6 @@
 
 <script>
 (function(){
-  // ── EmailJS init (si el CDN no cargó, no debe tumbar el resto del formulario)
-  try { if (window.emailjs) emailjs.init("BT4xFfTS1JFggXsdw"); } catch(e){ console.error("EmailJS no cargó:", e); }
 
   const $ = id => document.getElementById(id);
 
@@ -962,24 +959,57 @@
     return doc;
   }
 
-  // ── Build WhatsApp message (short)
+  // ── Build WhatsApp message (completo: no depende del PDF ni del correo)
   function buildWA(d){
-    const lines = [
-      "Hola Christian, te comparto mis datos del cuestionario de GMM. El PDF se descargó en mi dispositivo y lo adjuntaré aquí en WhatsApp.",
-      "",
-      `• Nombre: ${d.nombre}`,
-      `• Edad: ${d.edad ? d.edad+" años" : "—"}`,
-      `• Ciudad: ${d.ciudad}`,
-      `• Tel: ${d.telefono}`,
-      `• Correo: ${d.email}`,
-      `• Contratación: ${d.tipo_contratacion}`,
-      `• Situación: ${d.situacion_seguro}`,
-      `• Condiciones indicadas: ${d.cond_preexistentes}`,
-    ];
+    const v = x => (x && String(x).trim()) ? String(x).trim() : "—";
+    const yn = x => x==="si" ? "Sí" : x==="no" ? "No" : v(x);
+    const L = [];
+    L.push("Hola Christian, te comparto mis datos del cuestionario de GMM.");
+    L.push("");
+    L.push("*DATOS DEL TITULAR*");
+    L.push(`• Nombre: ${v(d.nombre)}`);
+    L.push(`• RFC: ${v(d.rfc)}`);
+    L.push(`• Fecha de nacimiento: ${v(d.fecha_nac)} (${d.edad ? d.edad+" años" : "edad —"})`);
+    L.push(`• Sexo: ${v(d.sexo)} | Estado civil: ${v(d.estado_civil)}`);
+    L.push(`• Tel: ${v(d.telefono)}`);
+    L.push(`• Correo: ${v(d.email)}`);
+    L.push(`• Ciudad: ${v(d.ciudad)} | C.P.: ${v(d.cp)}`);
+    L.push(`• Ocupación: ${v(d.ocupacion)}`);
+    L.push("");
+    L.push("*COBERTURA*");
+    L.push(`• Contratación: ${v(d.tipo_contratacion)}`);
+    L.push(`• Situación: ${v(d.situacion_seguro)}`);
+    if(d.aseguradora_actual) L.push(`• Aseguradora actual: ${d.aseguradora_actual}`);
+    if(d.plan_actual) L.push(`• Plan actual: ${d.plan_actual}`);
+    if(d.deducible_actual) L.push(`• Deducible actual: ${d.deducible_actual}`);
+    if(d.coaseguro_actual) L.push(`• Coaseguro actual: ${d.coaseguro_actual}`);
+    if(d.antiguedad_poliza) L.push(`• Antigüedad de la póliza: ${d.antiguedad_poliza}`);
+    L.push(`• Red hospitalaria: ${v(d.nivel_hospitalario)}`);
+    L.push(`• Zona: ${v(d.zona_hospitalaria)}`);
+    L.push(`• Deducible preferido: ${v(d.deducible_preferido)}`);
+    L.push(`• Coaseguro preferido: ${v(d.coaseguro_preferido)}`);
     if(d.dependientes && d.dependientes.length){
-      lines.push(`• Familiares incluidos: ${d.dependientes.length} (detalle en PDF y correo)`);
+      L.push("");
+      L.push(`*FAMILIARES INCLUIDOS (${d.dependientes.length})*`);
+      d.dependientes.forEach((dep,i)=>{
+        L.push(`${i+1}. ${v(dep.nombre)} — ${dep.relacion||"relación no indicada"}`);
+        L.push(`   Nac: ${v(dep.fecha_nac)} (${dep.edad ? dep.edad+" años" : "edad N/D"}) | Sexo: ${v(dep.sexo)} | ¿Tiene seguro?: ${yn(dep.tiene_seguro)}`);
+      });
     }
-    return encodeURIComponent(lines.join("\n"));
+    L.push("");
+    L.push("*SALUD*");
+    L.push(`• Medicamentos: ${v(d.toma_medicamentos)}${d.detalle_medicamentos ? " — "+d.detalle_medicamentos : ""}`);
+    L.push(`• Cirugías previas: ${v(d.cirugias_previas)}${d.detalle_cirugias ? " — "+d.detalle_cirugias : ""}`);
+    L.push(`• Hospitalizaciones: ${v(d.hospitalizaciones)}${d.detalle_hospitalizaciones ? " — "+d.detalle_hospitalizaciones : ""}`);
+    L.push(`• Fuma: ${v(d.fuma_actualmente)}${d.fuma_cigs ? " ("+d.fuma_cigs+" cig/día)" : ""}${d.fuma_desde ? " desde "+d.fuma_desde : ""}`);
+    L.push(`• Condiciones: ${v(d.cond_preexistentes)}`);
+    L.push(`• Rechazo de aseguradora: ${v(d.rechazo_aseguradora)}`);
+    L.push(`• Cirugía programada: ${v(d.cirugia_programada)}`);
+    L.push(`• Discapacidad: ${v(d.discapacidad)}`);
+    if(d.detalles_medicos){ L.push(""); L.push("*DETALLES ADICIONALES*"); L.push(d.detalles_medicos); }
+    L.push("");
+    L.push("(Si se me descargó el PDF, lo adjunto aquí.)");
+    return encodeURIComponent(L.join("\n"));
   }
 
   // ── TOAST
@@ -1031,64 +1061,10 @@
       if(waWindow && !waWindow.closed){ waWindow.location.href = url; }
       else { window.open(url, "_blank"); }
       overlay.classList.remove("show");
-      showToast("✅ PDF preparado. Adjunta el archivo descargado a tu mensaje de WhatsApp.", "success");
+      showToast("✅ Listo. En WhatsApp presiona enviar para mandar tus datos.", "success");
 
-      // El correo es una entrega secundaria; si falla, no bloquea PDF ni WhatsApp.
-      overlayMsg.textContent = "Enviando una copia por correo…";
-      let emailDelivered = false;
-      try {
-        if (!window.emailjs) throw new Error("EmailJS no está disponible");
-      await emailjs.send("Servicio_ijc4qzo", "template_jcus0e8", {
-        to_email: "christian.garcia@sfgarba.com.mx",
-        subject: `Datos de cliente: ${d.nombre}`,
-        from_name: d.nombre,
-        from_email: d.email || "sin-correo@formulario.com",
-        message: `CUESTIONARIO GMM - ${d.nombre}
-
-DATOS DEL TITULAR
-Nombre: ${d.nombre}
-RFC: ${d.rfc}
-Fecha nac.: ${d.fecha_nac} | Edad: ${d.edad} años
-Sexo: ${d.sexo} | Estado civil: ${d.estado_civil}
-Teléfono: ${d.telefono}
-Correo: ${d.email}
-Ciudad: ${d.ciudad} | C.P.: ${d.cp}
-Ocupación: ${d.ocupacion}
-
-COBERTURA
-Contratación: ${d.tipo_contratacion}
-Situación: ${d.situacion_seguro}
-Aseguradora anterior: ${d.aseguradora_actual||"N/A"}
-Red hospitalaria: ${d.nivel_hospitalario}
-Zona: ${d.zona_hospitalaria}
-Deducible preferido: ${d.deducible_preferido}
-Coaseguro preferido: ${d.coaseguro_preferido}
-${d.dependientes && d.dependientes.length ? "\nFAMILIARES INCLUIDOS\n" + d.dependientes.map((dep,i)=>`${i+1}. ${dep.nombre} — ${dep.relacion||"relación no indicada"} | Nac: ${dep.fecha_nac||"N/D"} (${dep.edad?dep.edad+" años":"edad N/D"}) | Sexo: ${dep.sexo||"N/D"} | ¿Tiene seguro?: ${dep.tiene_seguro==="si"?"Sí":dep.tiene_seguro==="no"?"No":"N/D"}`).join("\n") : ""}
-
-SALUD
-Medicamentos: ${d.toma_medicamentos} ${d.detalle_medicamentos?"- "+d.detalle_medicamentos:""}
-Cirugías: ${d.cirugias_previas} ${d.detalle_cirugias?"- "+d.detalle_cirugias:""}
-Hospitalizaciones: ${d.hospitalizaciones} ${d.detalle_hospitalizaciones?"- "+d.detalle_hospitalizaciones:""}
-Fuma: ${d.fuma_actualmente}
-Condiciones: ${d.cond_preexistentes}
-Cirugía programada: ${d.cirugia_programada}
-Discapacidad: ${d.discapacidad}
-
-DETALLES ADICIONALES
-${d.detalles_medicos||"Sin comentarios."}`,
-      });
-        emailDelivered = true;
-      } catch (emailError) {
-        console.error("Error al enviar copia del cuestionario por correo:", emailError);
-      }
-
-      if (emailDelivered) {
-        $("successScreen").querySelector("p").textContent = "Tu cuestionario se envió por correo correctamente. Adjunta también el PDF descargado a tu mensaje de WhatsApp.";
-        $("successScreen").classList.add("show");
-        $("successScreen").scrollIntoView({behavior:"smooth", block:"center"});
-      } else {
-        showToast("⚠️ No se envió la copia por correo. Adjunta el PDF descargado en WhatsApp para que tu asesor lo reciba.", "error");
-      }
+      $("successScreen").classList.add("show");
+      $("successScreen").scrollIntoView({behavior:"smooth", block:"center"});
 
     } catch(err){
       overlay.classList.remove("show");
@@ -1127,5 +1103,18 @@ window.addEventListener('scroll', updateProgress);
 updateProgress();
 </script>
 
+<script>
+(function(){
+  try{
+    var ua = navigator.userAgent || "";
+    if(/FBAN|FBAV|Instagram|WhatsApp|Line\/|MicroMessenger|Messenger/i.test(ua)){
+      var b = document.createElement("div");
+      b.style.cssText = "background:#FEF3C7;color:#78350F;padding:10px 16px;font:600 13px/1.4 system-ui,sans-serif;text-align:center;";
+      b.textContent = "Para que el PDF se descargue, abre esta página en Safari o Chrome (menú ⋯ → Abrir en el navegador). Aun así, tus datos se envían completos por WhatsApp.";
+      document.body.insertBefore(b, document.body.firstChild);
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
